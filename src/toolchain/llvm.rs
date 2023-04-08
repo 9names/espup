@@ -102,11 +102,11 @@ impl Llvm {
             #[cfg(windows)]
             if cfg!(windows) {
                 Command::new("setx")
-                    .args(["LIBCLANG_PATH", "", "/m"])
+                    .args(["LIBCLANG_PATH", ""])
                     .stdout(Stdio::null())
                     .output()?;
                 Command::new("setx")
-                    .args(["CLANG_PATH", "", "/m"])
+                    .args(["CLANG_PATH", ""])
                     .stdout(Stdio::null())
                     .output()?;
                 std::env::set_var(
@@ -164,7 +164,6 @@ impl Installable for Llvm {
                 .args([
                     "LIBCLANG_PATH",
                     &format!("{}\\libclang.dll", self.get_lib_path().replace('/', "\\")),
-                    "/m",
                 ])
                 .stdout(Stdio::null())
                 .output()?;
@@ -181,7 +180,7 @@ impl Installable for Llvm {
             if cfg!(windows) {
                 exports.push(format!("$Env:CLANG_PATH = \"{}\"", self.get_bin_path()));
                 Command::new("setx")
-                    .args(["CLANG_PATH", &self.get_bin_path().replace('/', "\\"), "/m"])
+                    .args(["CLANG_PATH", &self.get_bin_path().replace('/', "\\")])
                     .stdout(Stdio::null())
                     .output()?;
             }

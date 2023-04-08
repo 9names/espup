@@ -260,7 +260,7 @@ async fn uninstall(args: UninstallOpts) -> Result<()> {
     #[cfg(windows)]
     if cfg!(windows) {
         Command::new("setx")
-            .args(["PATH", &std::env::var("PATH").unwrap(), "/m"])
+            .args(["PATH", &std::env::var("PATH").unwrap()])
             .output()
             .unwrap();
     }
@@ -350,7 +350,7 @@ fn export_environment(export_file: &Path) -> Result<(), Error> {
     #[cfg(windows)]
     if cfg!(windows) {
         Command::new("setx")
-            .args(["PATH", &env::var("PATH").unwrap(), "/m"])
+            .args(["PATH", &env::var("PATH").unwrap()])
             .stdout(Stdio::null())
             .output()?;
         warn!(
